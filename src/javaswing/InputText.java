@@ -2,12 +2,8 @@ package javaswing;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
@@ -16,7 +12,6 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -24,32 +19,16 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
 import rc4.RC4;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeEvent;
 
 public class InputText extends JFrame {
-
+	private static final long serialVersionUID = 1L;
+	
 	private JPanel contentPane;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 	private final ButtonGroup buttonGroup_1 = new ButtonGroup();
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					InputText frame = new InputText();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the frame.
-	 */
 	public InputText() {
 		setTitle("M\u00E3 h\u00F3a RC4");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -66,6 +45,17 @@ public class InputText extends JFrame {
 		contentPane.add(contentPane_1);
 		
 		JComboBox<String> comboBox = new JComboBox<String>();
+//		comboBox.addPropertyChangeListener(new PropertyChangeListener() {
+//			public void propertyChange(PropertyChangeEvent evt) {
+//				String selectedItem = (String) comboBox.getSelectedItem();
+//				System.out.println(selectedItem);
+//				if ("Nhập văn bản".equals(selectedItem)) {
+//					Main.chooseText = true;
+//				} else {
+//					Main.chooseText = false;
+//				}
+//			}
+//		});
 		comboBox.setModel(new DefaultComboBoxModel<String>(new String[] {"Nhập văn bản", "Tải file lên"}));
 		comboBox.setBounds(75, 29, 679, 22);
 		contentPane_1.add(comboBox);
@@ -155,7 +145,7 @@ public class InputText extends JFrame {
 					coSoRa = "Binary";
 				}
 				
-				RC4.maHoa(textArea, textArea_1, textArea_2, coSoVao, coSoRa);
+				RC4.maHoaText(textArea, textArea_1, textArea_2, coSoVao, coSoRa);
 			}
 		});
 		
@@ -163,31 +153,29 @@ public class InputText extends JFrame {
 		contentPane_1.add(btnNewButton_2);
 		
 		JButton btnNewButton_2_1 = new JButton("Gi\u1EA3i m\u00E3");
-//		btnNewButton_2_1.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent arg0) {
-//				giaiMa(textArea, textArea_1, textArea_2);
-//			}
-//		});
-		btnNewButton_2_1.setBounds(452, 405, 89, 23);
-		contentPane_1.add(btnNewButton_2_1);
-	}
-	
-	private static void addPopup(Component component, final JPopupMenu popup) {
-		component.addMouseListener(new MouseAdapter() {
-			public void mousePressed(MouseEvent e) {
-				if (e.isPopupTrigger()) {
-					showMenu(e);
+		btnNewButton_2_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				String coSoVao = "Text";
+				if (rdbtnNewRadioButton_1.isSelected()) {
+					coSoVao = "Hexa";
 				}
-			}
-			public void mouseReleased(MouseEvent e) {
-				if (e.isPopupTrigger()) {
-					showMenu(e);
+				if (rdbtnNewRadioButton.isSelected()) {
+					coSoVao = "Binary";
 				}
-			}
-			private void showMenu(MouseEvent e) {
-				popup.show(e.getComponent(), e.getX(), e.getY());
+				
+				String coSoRa = "Text";
+				if (rdbtnNewRadioButton_1_1.isSelected()) {
+					coSoRa = "Hexa";
+				}
+				if (rdbtnNewRadioButton_3.isSelected()) {
+					coSoRa = "Binary";
+				}
+				
+				RC4.maHoaText(textArea, textArea_1, textArea_2, coSoVao, coSoRa);
 			}
 		});
+		btnNewButton_2_1.setBounds(452, 405, 89, 23);
+		contentPane_1.add(btnNewButton_2_1);
 	}
 
 }
