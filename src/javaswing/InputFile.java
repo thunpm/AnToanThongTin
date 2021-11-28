@@ -2,12 +2,8 @@ package javaswing;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -24,40 +20,21 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
-import rc4.RC4;
+import processing.MaHoa;
 
 public class InputFile extends JFrame {
-
+	private static final long serialVersionUID = 1L;
+	
 	private JPanel contentPane;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 	private final ButtonGroup buttonGroup_1 = new ButtonGroup();
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					InputFile frame = new InputFile();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the frame.
-	 */
 	public InputFile() {
 		setTitle("M\u00E3 h\u00F3a RC4");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -73,11 +50,29 @@ public class InputFile extends JFrame {
 		contentPane_1.setBounds(10, 11, 764, 439);
 		contentPane.add(contentPane_1);
 		
+		// thay doi giao dien khi chon trong phan menu
 		JComboBox<String> comboBox = new JComboBox<String>();
+		comboBox.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent event) {
+				int selection = comboBox.getSelectedIndex();
+				switch(selection) {
+				case 0:
+					setVisible(true);
+					
+					break;
+				case 1:
+					new InputText().setVisible(true);
+					setVisible(false);
+					
+					break;
+				}
+			}
+		});
 		comboBox.setModel(new DefaultComboBoxModel<String>(new String[] {"Tải file lên", "Nhập văn bản"}));
 		comboBox.setBounds(75, 29, 679, 22);
 		contentPane_1.add(comboBox);
 		
+		// xu ly phan tai file len
 		JTextArea textArea = new JTextArea();
 		textArea.setBounds(75, 90, 562, 22);
 		contentPane_1.add(textArea);
@@ -90,6 +85,7 @@ public class InputFile extends JFrame {
 				
 				int x = fileChooser.showOpenDialog(null);
 				if (x == fileChooser.APPROVE_OPTION) {
+					input.delete(0, input.length());
 					File f = fileChooser.getSelectedFile();
 					textArea.setText(f.getPath());
 					String s = null;
@@ -171,6 +167,7 @@ public class InputFile extends JFrame {
 		scrollPane.setLocation(75, 182);
 		contentPane_1.add(scrollPane, BorderLayout.CENTER);
 		
+		// xu ly action chon ma hoa
 		JButton btnNewButton_2 = new JButton("M\u00E3 h\u00F3a");
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -190,39 +187,38 @@ public class InputFile extends JFrame {
 					coSoRa = "Binary";
 				}
 				
-				RC4.maHoaFile(input, textArea_1, textArea_2, coSoVao, coSoRa);
+				MaHoa.maHoaFile(input, textArea_1, textArea_2, coSoVao, coSoRa);
 			}
 		});
 		
 		btnNewButton_2.setBounds(236, 405, 89, 23);
 		contentPane_1.add(btnNewButton_2);
 		
+		// xu ly action chon giai ma
 		JButton btnNewButton_2_1 = new JButton("Gi\u1EA3i m\u00E3");
-//		btnNewButton_2_1.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent arg0) {
-//				giaiMa(textArea, textArea_1, textArea_2);
-//			}
-//		});
-		btnNewButton_2_1.setBounds(452, 405, 89, 23);
-		contentPane_1.add(btnNewButton_2_1);
-	
-	}
-	
-	private static void addPopup(Component component, final JPopupMenu popup) {
-		component.addMouseListener(new MouseAdapter() {
-			public void mousePressed(MouseEvent e) {
-				if (e.isPopupTrigger()) {
-					showMenu(e);
+		btnNewButton_2_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				String coSoVao = "Text";
+				if (rdbtnNewRadioButton_1.isSelected()) {
+					coSoVao = "Hexa";
 				}
-			}
-			public void mouseReleased(MouseEvent e) {
-				if (e.isPopupTrigger()) {
-					showMenu(e);
+				if (rdbtnNewRadioButton.isSelected()) {
+					coSoVao = "Binary";
 				}
-			}
-			private void showMenu(MouseEvent e) {
-				popup.show(e.getComponent(), e.getX(), e.getY());
+				
+				String coSoRa = "Text";
+				if (rdbtnNewRadioButton_1_1.isSelected()) {
+					coSoRa = "Hexa";
+				}
+				if (rdbtnNewRadioButton_3.isSelected()) {
+					coSoRa = "Binary";
+				}
+				
+				MaHoa.maHoaFile(input, textArea_1, textArea_2, coSoVao, coSoRa);
 			}
 		});
+		btnNewButton_2_1.setBounds(452, 405, 89, 23);
+		contentPane_1.add(btnNewButton_2_1);
 	}
+	
 }
