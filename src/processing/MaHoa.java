@@ -2,6 +2,7 @@ package processing;
 
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 
 public class MaHoa {
@@ -64,7 +65,8 @@ public class MaHoa {
 		
 		// loi khi chuyen co so
 		if (input == null) {
-			result.setText("Co so da chon khong phu hop!");
+			result.setText("");
+			JOptionPane.showMessageDialog(null, "Cơ số đã chọn không phù hợp!");
 			return;
 		}
 		
@@ -77,7 +79,8 @@ public class MaHoa {
 		
 		// neu ma hoa khong thanh cong
 		if ("Error Key".equals(res)) {
-			result.setText("Do dai cua khoa trong khoang 1 den 256.\nKhong the ma hoa!");
+			result.setText("");
+			JOptionPane.showMessageDialog(null, "Độ dài của khóa trong khoảng từ 1 đến 256.\nKhông thể mã hóa!");
 			return;
 		}
 		
@@ -106,7 +109,8 @@ public class MaHoa {
 		
 		// loi khi chuyen co so
 		if (input == null) {
-			result.setText("Co so da chon khong phu hop!");
+			result.setText("");
+			JOptionPane.showMessageDialog(null, "Cơ số đã chọn không phù hợp!");
 			return;
 		}
 		
@@ -119,7 +123,8 @@ public class MaHoa {
 		
 		// neu ma hoa khong thanh cong
 		if ("Error Key".equals(res)) {
-			result.setText("Do dai cua khoa trong khoang 1 den 256.\nKhong the ma hoa!");
+			result.setText("");
+			JOptionPane.showMessageDialog(null, "Độ dài của khóa trong khoảng từ 1 đến 256.\nKhông thể mã hóa!");
 			return;
 		}
 		
