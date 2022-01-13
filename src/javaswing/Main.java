@@ -5,6 +5,8 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 
 public class Main extends JFrame {
+	public Main() {
+	}
 	private static final long serialVersionUID = 1L;
 	
 	public static void main(String[] args) {
